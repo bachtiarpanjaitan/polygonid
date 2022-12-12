@@ -9,6 +9,7 @@ var usersRouter = require('./routes/users');
 var provinceRouter = require('./routes/province');
 var districtRouter = require('./routes/district');
 var subDistrictRouter = require('./routes/subdistrict');
+var villageRouter = require('./routes/village');
 
 var app = express();
 
@@ -27,6 +28,7 @@ app.use('/users', usersRouter);
 app.use('/province', provinceRouter)
 app.use('/district', districtRouter)
 app.use('/sub-district', subDistrictRouter)
+app.use('/village',villageRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
