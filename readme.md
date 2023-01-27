@@ -1,6 +1,6 @@
 **Initialize Install**
 
-make sure you install all required package with <code>npm install</code>
+Make sure you install all required package with <code>npm install</code>
 
 **Export db from mysql**
 
@@ -8,4 +8,4 @@ make sure you install all required package with <code>npm install</code>
 
 **Run APP**
 
-<code>DEBUG=polygonid:* npm start</code> or <code> node app.js </code>
+<code>PORT=5000 DEBUG=polygonid:* npm start</code> or <code> node app.js </code>
