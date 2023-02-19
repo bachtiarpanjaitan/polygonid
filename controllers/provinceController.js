@@ -1,12 +1,22 @@
 var db = require("../config/database.js")
 const {responseData,responseMessage} = require('../utils/http-handler.js')
+const {coordTransformer} = require('../utils/coord.js')
 const getProvinceList = ((req,res) => {
     var query = 'SELECT * FROM provincies ORDER BY prov_id'
     db.all(query,[],(err,rows) => {
         if(err){
             responseMessage(res,400,err)
         }else {
-            responseData(res,200,rows)
+            let newRows = rows.map((r) => {
+                return {
+                    prov_id: r.prov_id,
+                    name: r.name,
+                    lat: r.lat,
+                    lng: r.lng,
+                    polygon: JSON.parse(coordTransformer(r.polygon))
+                }
+            })
+            responseData(res,200,newRows)
         }
     })
 })
@@ -33,8 +43,17 @@ const getProvinceById = ((req,res) => {
         if(err){
             responseMessage(res,400,err)
         }else {
-            if(rows.length > 0)responseData(res,200,rows[0])
-            else responseData(res,200,rows)
+            let newRows = rows.map((r) => {
+                return {
+                    prov_id: r.prov_id,
+                    name: r.name,
+                    lat: r.lat,
+                    lng: r.lng,
+                    polygon: JSON.parse(coordTransformer(r.polygon))
+                }
+            })
+
+            responseData(res,200,newRows)
         }
     })
 })

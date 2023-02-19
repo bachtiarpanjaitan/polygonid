@@ -1,6 +1,6 @@
 var db = require("../config/database.js")
 const {responseData,responseMessage} = require('../utils/http-handler.js')
-
+const {coordTransformer} = require('../utils/coord.js')
 const getDistrictByProv = ((req,res) => {
     var params = req.params
     var queries = req.query
@@ -14,7 +14,18 @@ const getDistrictByProv = ((req,res) => {
         if(err){
             responseMessage(res,400,err)
         }else {
-            responseData(res,200,rows)
+            let newRows = rows.map((r) => {
+                return {
+                    prov_id: r.prov_id,
+                    district_id: r.district_id,
+                    name: r.name,
+                    lat: r.lat,
+                    lng: r.lng,
+                    polygon: JSON.parse(coordTransformer(r.polygon))
+                }
+            })
+
+            responseData(res,200,newRows)
         }
     })
 })
@@ -30,8 +41,18 @@ const getDistrictById = ((req,res) => {
         if(err){
             responseMessage(res,400,err)
         }else {
-            if(rows.length > 0)responseData(res,200,rows)
-            else responseData(res,200,rows)
+            let newRows = rows.map((r) => {
+                return {
+                    prov_id: r.prov_id,
+                    district_id: r.district_id,
+                    name: r.name,
+                    lat: r.lat,
+                    lng: r.lng,
+                    polygon: JSON.parse(coordTransformer(r.polygon))
+                }
+            })
+
+            responseData(res,200,newRows)
         }
     })
 
