@@ -39,7 +39,6 @@ const getSubDistrictById = ((req,res) => {
         query = `SELECT prov_id,district_id,sub_district_id,name,lat,lng FROM sub_districts where sub_district_id=${params.id}`
     }
     db.all(query,[],(err,rows) => {
-        console.log(rows)
         if(err){
             responseMessage(res,400,err)
         }else {
@@ -67,14 +66,7 @@ const getSubDistrictById = ((req,res) => {
                 }
 
                 responseData(res,200,newRows)
-            }
-            
-            // if(rows.length > 0)responseData(res,200,data)
-            // else responseData(res,200,data)
-
-            
-
-            responseData(res,200, [])
+            } else responseData(res,200, [])  
         }
     })
 
