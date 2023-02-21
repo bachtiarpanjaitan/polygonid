@@ -14,7 +14,7 @@ const getSubDistrictByDistrict = ((req,res) => {
                     code: r.code,
                     name: r.name,
                     adm0: r.adm0,
-                    adm0_code: r.admo_code,
+                    adm0_code: r.adm0_code,
                     adm1: r.adm1,
                     adm1_code: r.adm1_code,
                     adm2: r.adm2,
