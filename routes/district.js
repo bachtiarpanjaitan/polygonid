@@ -2,11 +2,11 @@ const express = require('express')
 const router = express.Router()
 
 const {
-    getDistrictByProv,
+    getSubDistrictByDistrict,
     getDistrictById
 } = require('../controllers/districtController')
 
-router.get('/:id', getDistrictById)
-router.get('/list/:id', getDistrictByProv)
+router.get('/detail/:id', getDistrictById)
+router.get('/:id', getSubDistrictByDistrict)
 
 module.exports = router

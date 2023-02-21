@@ -1,30 +1,26 @@
 var db = require("../config/database.js")
 const {responseData,responseMessage} = require('../utils/http-handler.js')
 const {coordTransformer} = require('../utils/coord.js')
-const getDistrictByProv = ((req,res) => {
+const getSubDistrictByDistrict = ((req,res) => {
     var params = req.params
-    var queries = req.query
-    if(queries.mode != undefined && queries.mode=="simple"){
-        var query = `SELECT prov_id,district_id,name,lat,lng FROM districts where prov_id = ${params.id} ORDER BY district_id`
-    } else {
-        var query = `SELECT * FROM districts where prov_id = ${params.id} ORDER BY district_id`
-    }
-    
+    var query = `SELECT code,name,shape_leng,shape_area,adm0,adm0_code,adm1,adm1_code FROM adm2 WHERE adm1_code='${params.id}' ORDER BY code`
     db.all(query,[],(err,rows) => {
         if(err){
+            console.log(err)
             responseMessage(res,400,err)
         }else {
             let newRows = rows.map((r) => {
                 return {
-                    prov_id: r.prov_id,
-                    district_id: r.district_id,
+                    code: r.code,
                     name: r.name,
-                    lat: r.lat,
-                    lng: r.lng,
-                    polygon: JSON.parse(coordTransformer(r.polygon))
+                    adm0: r.adm0,
+                    adm0_code: r.admo_code,
+                    adm1: r.adm1,
+                    adm1_code: r.adm1_code,
+                    shape_leng: r.shape_leng,
+                    shape_area: r.shape_area
                 }
             })
-
             responseData(res,200,newRows)
         }
     })
@@ -32,33 +28,34 @@ const getDistrictByProv = ((req,res) => {
 
 const getDistrictById = ((req,res) => {
     var params = req.params
-    var queries = req.query
-    var query = `SELECT * FROM districts where district_id=${params.id}`
-    if(queries.mode != undefined && queries.mode=="simple"){
-        query = `SELECT prov_id,district_id,name,lat,lng FROM districts where district_id=${params.id}`
-    }
+    var query = `SELECT * FROM adm2 WHERE code='${params.id}'`
     db.all(query,[],(err,rows) => {
         if(err){
             responseMessage(res,400,err)
         }else {
             let newRows = rows.map((r) => {
                 return {
-                    prov_id: r.prov_id,
-                    district_id: r.district_id,
+                    code: r.code,
                     name: r.name,
-                    lat: r.lat,
-                    lng: r.lng,
-                    polygon: JSON.parse(coordTransformer(r.polygon))
+                    shape_leng: r.shape_leng,
+                    shape_area: r.shape_area,
+                    adm0: r.adm0,
+                    adm0_code: r.adm0_code,
+                    adm1: r.adm1,
+                    adm1_code: r.adm1_code,
+                    coodinates: JSON.parse(r.coordinates, (k,v) => {
+                        if(k == 'geometry') return JSON.parse(v)
+                        else return v
+                    })
                 }
             })
-
-            responseData(res,200,newRows)
+            if(newRows.length >=1) responseData(res,200,newRows[0])
+            else responseData(res,200,newRows)
         }
     })
-
 })
 
 module.exports = {
-    getDistrictByProv,
+    getSubDistrictByDistrict,
     getDistrictById
 }

@@ -6,7 +6,7 @@ const {
     getSubDistrictById
 } = require('../controllers/subDistrictController')
 
-router.get('/:id', getSubDistrictById)
-router.get('/list/:id', getSubDistrictByDistrict)
+router.get('/:id', getSubDistrictByDistrict)
+router.get('/detail/:id',  getSubDistrictById)
 
 module.exports = router

@@ -2,13 +2,11 @@ const express = require('express')
 const router = express.Router()
 
 const {
-    getProvinceList,
-    getProvinceById,
-    getProvinceListSimple
+    getDistrictProvinceList,
+    getProvinceById
 } = require('../controllers/provinceController')
 
-router.get('/', getProvinceListSimple)
-router.get('/detail', getProvinceList)
-router.get('/:id', getProvinceById)
+router.get('/detail/:id',  getProvinceById)
+router.get('/', getDistrictProvinceList)
 
 module.exports = router

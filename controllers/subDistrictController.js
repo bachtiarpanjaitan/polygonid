@@ -3,73 +3,62 @@ const {responseData,responseMessage} = require('../utils/http-handler.js')
 const {coordTransformer} = require('../utils/coord.js')
 const getSubDistrictByDistrict = ((req,res) => {
     var params = req.params
-    var queries = req.query
-    var query = `SELECT * FROM sub_districts where district_id = ${params.id} ORDER BY sub_district_id`
-    if(queries.mode != undefined && queries.mode=="simple"){
-        var query = `SELECT prov_id,district_id,sub_district_id,name,lat,lng FROM sub_districts where district_id = ${params.id} ORDER BY sub_district_id`
-    }
-    
+    var query = `SELECT code,name,shape_leng,shape_area,adm0,adm0_code,adm1,adm1_code,adm2,adm2_code FROM adm3 WHERE adm2_code='${params.id}' ORDER BY code`
     db.all(query,[],(err,rows) => {
         if(err){
+            console.log(err)
             responseMessage(res,400,err)
         }else {
             let newRows = rows.map((r) => {
                 return {
-                    prov_id: r.prov_id,
-                    district_id: r.district_id,
-                    sub_district_id: r.sub_district_id,
+                    code: r.code,
                     name: r.name,
-                    lat: r.lat,
-                    lng: r.lng,
-                    polygon: JSON.parse(coordTransformer(r.polygon))
+                    adm0: r.adm0,
+                    adm0_code: r.admo_code,
+                    adm1: r.adm1,
+                    adm1_code: r.adm1_code,
+                    adm2: r.adm2,
+                    adm2_code: r.adm2_code,
+                    adm3: r.adm3,
+                    adm3_code: r.adm3_code,
+                    shape_leng: r.shape_leng,
+                    shape_area: r.shape_area
                 }
             })
-
             responseData(res,200,newRows)
-            // responseData(res,200,rows)
         }
     })
 })
 
 const getSubDistrictById = ((req,res) => {
     var params = req.params
-    var queries = req.query
-    var query = `SELECT * FROM sub_districts where sub_district_id=${params.id}`
-    if(queries.mode != undefined && queries.mode=="simple"){
-        query = `SELECT prov_id,district_id,sub_district_id,name,lat,lng FROM sub_districts where sub_district_id=${params.id}`
-    }
+    var query = `SELECT * FROM adm3 WHERE code='${params.id}'`
     db.all(query,[],(err,rows) => {
         if(err){
             responseMessage(res,400,err)
         }else {
-            var polygons = []
-            var data = null;
-            if(rows.length > 0){
-                if(!rows[0].polygon.includes('MULTIPOLYGON')){
-                    rows.forEach(row => {
-                        polygons.push(row.polygon.substring(7, row.polygon.length))
-                    });
-                    polygons = `MULTIPOLYGON(${polygons.join(',')})`
-                    data = rows[0]
-                    data.polygon = polygons
-
-                } else data = rows[0]
-
-                let newRows = {
-                    prov_id: rows[0].prov_id,
-                    district_id: rows[0].district_id,
-                    sub_district_id: rows[0].sub_district_id,
-                    name: rows[0].name,
-                    lat: rows[0].lat,
-                    lng: rows[0].lng,
-                    polygon: JSON.parse(coordTransformer(data.polygon))
+            let newRows = rows.map((r) => {
+                return {
+                    code: r.code,
+                    name: r.name,
+                    shape_leng: r.shape_leng,
+                    shape_area: r.shape_area,
+                    adm0: r.adm0,
+                    adm0_code: r.adm0_code,
+                    adm1: r.adm1,
+                    adm1_code: r.adm1_code,
+                    adm2: r.adm2,
+                    adm2_code: r.adm2_code,
+                    coodinates: JSON.parse(r.coordinates, (k,v) => {
+                        if(k == 'geometry') return JSON.parse(v)
+                        else return v
+                    })
                 }
-
-                responseData(res,200,newRows)
-            } else responseData(res,200, [])  
+            })
+            if(newRows.length >=1) responseData(res,200,newRows[0])
+            else responseData(res,200,newRows)
         }
     })
-
 })
 
 module.exports = {
