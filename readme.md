@@ -23,6 +23,8 @@ Make sure you install all required package with <code>npm install</code>
 | shape_leng | Double |
 | adm0 | String |
 | adm0_code | String |
+| x | Double |
+| y | Double |
 ### Method: GET
 >```
 >{{HOST}}/province
@@ -48,6 +50,8 @@ Make sure you install all required package with <code>npm install</code>
 | shape_leng | Double |
 | adm0 | String |
 | adm0_code | String |
+| x | Double |
+| y | Double |
 ### Method: GET
 >```
 >{{HOST}}/province/detail/{{PROVINCEID}}
@@ -72,6 +76,8 @@ Make sure you install all required package with <code>npm install</code>
 | shape_leng | Double |
 | adm0 | String |
 | adm0_code | String |
+| x | Double |
+| y | Double |
 ### Method: GET
 >```
 >{{HOST}}/district/{{PROVINCEID}}
@@ -99,6 +105,8 @@ Make sure you install all required package with <code>npm install</code>
 | adm0_code | String |
 | adm1 | String |
 | adm1_code | String |
+| x | Double |
+| y | Double |
 ### Method: GET
 >```
 >{{HOST}}/district/detail/{{DISTRICTID}}
@@ -127,6 +135,8 @@ Make sure you install all required package with <code>npm install</code>
 | adm1_code | String |
 | adm2 | String |
 | adm2_code | String |
+| x | Double |
+| y | Double |
 ### Method: GET
 >```
 >{{HOST}}/sub-district/{{DISTRICTID}}
@@ -156,6 +166,8 @@ Make sure you install all required package with <code>npm install</code>
 | adm1_code | String |
 | adm2 | String |
 | adm2_code | String |
+| x | Double |
+| y | Double |
 ### Method: GET
 >```
 >{{HOST}}/sub-district/detail/{{SUBDISTRICTID}}
@@ -186,6 +198,8 @@ Make sure you install all required package with <code>npm install</code>
 | adm2_code | String |
 | adm3 | String |
 | adm3_code | String |
+| x | Double |
+| y | Double |
 ### Method: GET
 >```
 >{{HOST}}/village/{{SUBDISTRICTID}}
@@ -217,6 +231,8 @@ Make sure you install all required package with <code>npm install</code>
 | adm2_code | String |
 | adm3 | String |
 | adm3_code | String |
+| x | Double |
+| y | Double |
 ### Method: GET
 >```
 >{{HOST}}/village/detail/{{VILLAGEID}}
@@ -225,6 +241,3 @@ Make sure you install all required package with <code>npm install</code>
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
 _________________________________________________
 Powered By: [postman-to-markdown](https://github.com/bautistaj/postman-to-markdown/)
-
-
-
