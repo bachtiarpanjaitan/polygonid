@@ -1,7 +1,7 @@
 var db = require("../config/database.js")
 const {responseData,responseMessage} = require('../utils/http-handler.js')
 const getDistrictProvinceList = ((req,res) => {
-    var query = 'SELECT code,name,shape_leng,shape_area,adm0,adm0_code FROM adm1 ORDER BY code'
+    var query = 'SELECT code,name,shape_leng,shape_area,adm0,adm0_code,x,y FROM adm1 ORDER BY code'
     db.all(query,[],(err,rows) => {
         if(err){
             responseMessage(res,400,err)
@@ -26,6 +26,8 @@ const getProvinceById = ((req,res) => {
                     shape_area: r.shape_area,
                     adm0: r.adm0,
                     adm0_code: r.adm0_code,
+                    x: r.x,
+                    y: r.y,
                     coodinates: JSON.parse(r.coordinates, (k,v) => {
                         if(k == 'geometry') return JSON.parse(v)
                         else return v

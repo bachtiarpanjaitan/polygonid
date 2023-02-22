@@ -3,7 +3,7 @@ const {responseData,responseMessage} = require('../utils/http-handler.js')
 const {coordTransformer} = require('../utils/coord.js')
 const getSubDistrictByDistrict = ((req,res) => {
     var params = req.params
-    var query = `SELECT code,name,shape_leng,shape_area,adm0,adm0_code,adm1,adm1_code FROM adm2 WHERE adm1_code='${params.id}' ORDER BY code`
+    var query = `SELECT code,name,shape_leng,shape_area,adm0,adm0_code,adm1,adm1_code,x,y FROM adm2 WHERE adm1_code='${params.id}' ORDER BY code`
     db.all(query,[],(err,rows) => {
         if(err){
             console.log(err)
@@ -16,6 +16,8 @@ const getSubDistrictByDistrict = ((req,res) => {
                     adm0: r.adm0,
                     adm0_code: r.admo_code,
                     adm1: r.adm1,
+                    x: r.x,
+                    y: r.y,
                     adm1_code: r.adm1_code,
                     shape_leng: r.shape_leng,
                     shape_area: r.shape_area
@@ -42,6 +44,8 @@ const getDistrictById = ((req,res) => {
                     adm0: r.adm0,
                     adm0_code: r.adm0_code,
                     adm1: r.adm1,
+                    x: r.x,
+                    y: r.y,
                     adm1_code: r.adm1_code,
                     coodinates: JSON.parse(r.coordinates, (k,v) => {
                         if(k == 'geometry') return JSON.parse(v)
