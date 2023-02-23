@@ -28,7 +28,7 @@ const getProvinceById = ((req,res) => {
                     adm0_code: r.adm0_code,
                     x: r.x,
                     y: r.y,
-                    coodinates: JSON.parse(r.coordinates, (k,v) => {
+                    coordinates: JSON.parse(r.coordinates, (k,v) => {
                         if(k == 'geometry') return JSON.parse(v)
                         else return v
                     })

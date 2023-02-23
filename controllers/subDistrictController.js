@@ -53,7 +53,7 @@ const getSubDistrictById = ((req,res) => {
                     x: r.x,
                     y: r.y,
                     adm2_code: r.adm2_code,
-                    coodinates: JSON.parse(r.coordinates, (k,v) => {
+                    coordinates: JSON.parse(r.coordinates, (k,v) => {
                         if(k == 'geometry') return JSON.parse(v)
                         else return v
                     })

@@ -55,7 +55,7 @@ const getVillageById = ((req,res) => {
                     x: r.x,
                     y: r.y,
                     adm3_code: r.adm3_code,
-                    coodinates: JSON.parse(r.coordinates, (k,v) => {
+                    coordinates: JSON.parse(r.coordinates, (k,v) => {
                         if(k == 'geometry') return JSON.parse(v)
                         else return v
                     })
